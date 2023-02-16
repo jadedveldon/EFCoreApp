@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeOperationsRepo, EmployeeOperationsRepo>();
 builder.Services.AddScoped<IEmployeeOperationsDL, EmployeeOperationsDL>();
 builder.Services.AddDbContext<MasterContext>(options => options.UseSqlServer("Data Source = TL545; Integrated Security = True"));
+builder.Services.AddAutoMapper(typeof(Program));
 
 //builder.Services.AddDbContext<LinqdemoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 

@@ -84,7 +84,7 @@ context.SaveChanges();
             var employee = await context.Employees.FromSql($"exec GetEmployee {id}").ToListAsync();
             if (employee.Count == 0)
             {
-                throw new NullReferenceException();
+                throw new DbUpdateException();
             }
             return employee[0];
         

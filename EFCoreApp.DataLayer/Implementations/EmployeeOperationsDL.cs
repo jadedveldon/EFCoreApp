@@ -1,4 +1,5 @@
-﻿using EDCore.Data.Entities.Modals;
+﻿using AutoMapper;
+using EDCore.Data.Entities.Modals;
 using EDCore.Data.Entities.ViewModels;
 using EFCoreApp.DataLayer.Interfaces;
 using EFCoreApp.Repository.Interfaces;
@@ -13,9 +14,12 @@ namespace EFCoreApp.DataLayer.Implementations
     public class EmployeeOperationsDL : IEmployeeOperationsDL
     {
         private readonly IEmployeeOperationsRepo repo;
-        public EmployeeOperationsDL(IEmployeeOperationsRepo repo)
+        private readonly IMapper mapper;
+
+        public EmployeeOperationsDL(IEmployeeOperationsRepo repo, IMapper mapper)
         {
             this.repo = repo;
+            this.mapper = mapper;
         }
         /// <summary>
         /// calls the add function from the repo layer and here the view model which is given by the user is converted to
@@ -87,17 +91,18 @@ namespace EFCoreApp.DataLayer.Implementations
         /// <returns></returns>
         public EmployeeViewModel ModelToViewModel(Employee employee)
         {
-            EmployeeViewModel viewEmployee = new EmployeeViewModel();
-            viewEmployee.Id = employee.Id;
-            viewEmployee.FirstName = employee.FirstName;
-            viewEmployee.LastName = employee.LastName;
-            viewEmployee.Email = employee.Email;
-            viewEmployee.Dob = employee.Dob;
-            viewEmployee.Gender = employee.Gender;
-            viewEmployee.Religion = employee.Religion;
-            viewEmployee.IsActive = employee.IsActive;
-            viewEmployee.Deptid = employee.Deptid;
-            return viewEmployee;
+            //EmployeeViewModel viewEmployee = new EmployeeViewModel();
+            //viewEmployee.Id = employee.Id;
+            //viewEmployee.FirstName = employee.FirstName;
+            //viewEmployee.LastName = employee.LastName;
+            //viewEmployee.Email = employee.Email;
+            //viewEmployee.Dob = employee.Dob;
+            //viewEmployee.Gender = employee.Gender;
+            //viewEmployee.Religion = employee.Religion;
+            //viewEmployee.IsActive = employee.IsActive;
+            //viewEmployee.Deptid = employee.Deptid;
+            //return viewEmployee;
+            return mapper.Map<EmployeeViewModel>(employee);
         }
         /// <summary>
         /// takes view model as input and returns data model as output
@@ -106,17 +111,18 @@ namespace EFCoreApp.DataLayer.Implementations
         /// <returns></returns>
         public Employee ViewModelToModel(EmployeeViewModel viewEmployee)
         {
-            Employee employee = new Employee();
-            employee.Id = viewEmployee.Id;
-            employee.FirstName = viewEmployee.FirstName;
-            employee.LastName = viewEmployee.LastName;
-            employee.Email = viewEmployee.Email;
-            employee.Dob = viewEmployee.Dob;
-            employee.Gender = viewEmployee.Gender;
-            employee.Religion = viewEmployee.Religion;
-            employee.IsActive = viewEmployee.IsActive;
-            employee.Deptid = viewEmployee.Deptid;
-            return employee;
+            //Employee employee = new Employee();
+            //employee.Id = viewEmployee.Id;
+            //employee.FirstName = viewEmployee.FirstName;
+            //employee.LastName = viewEmployee.LastName;
+            //employee.Email = viewEmployee.Email;
+            //employee.Dob = viewEmployee.Dob;
+            //employee.Gender = viewEmployee.Gender;
+            //employee.Religion = viewEmployee.Religion;
+            //employee.IsActive = viewEmployee.IsActive;
+            //employee.Deptid = viewEmployee.Deptid;
+            //return employee;
+            return mapper.Map<Employee>(viewEmployee);
         }
     }
 }

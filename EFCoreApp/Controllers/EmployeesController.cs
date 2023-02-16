@@ -25,8 +25,7 @@ namespace EFCoreApp.Controllers
         [HttpGet]
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
-            var AllEmployees = await employeeDL.GetAll();
-            return AllEmployees;
+            return await employeeDL.GetAll();
         }
 
         // GET api/<EmployeesController>/5
@@ -38,9 +37,9 @@ namespace EFCoreApp.Controllers
                 var employee = await employeeDL.Get(id);
                 return Ok(employee);
             }
-            catch(NullReferenceException)
+            catch(DbUpdateException)
             {
-                return Problem(statusCode: 400, title:"ID not found", detail:"ID entered does not exist in the Database") ;
+                return Problem(statusCode: 404, title:"ID not found", detail:"ID entered does not exist in the Database") ;
             }
             catch (Exception ex)
             {
@@ -55,8 +54,11 @@ namespace EFCoreApp.Controllers
         {
             try
             {
+                // TODO: Get the employee Id back from this method
                 await employeeDL.Add(viewEmployee);
-                return Ok();
+                var employeeId = viewEmployee.Id;
+                //return the employee Id
+                return CreatedAtAction(nameof(Get), new {Id = employeeId}, viewEmployee);
             }
             catch(DbUpdateException)
             {
