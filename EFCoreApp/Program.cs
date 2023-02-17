@@ -1,10 +1,9 @@
 using EDCore.Data.Entities.Modals;
-using Microsoft.EntityFrameworkCore;
-using EFCoreApp.Repository.Interfaces;
-using EFCoreApp.Repository.Implementations;
 using EFCoreApp.DataLayer.Implementations;
 using EFCoreApp.DataLayer.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using EFCoreApp.Repository.Implementations;
+using EFCoreApp.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +13,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IEmployeeOperationsRepo, EmployeeOperationsRepo>();
 builder.Services.AddScoped<IEmployeeOperationsDL, EmployeeOperationsDL>();
+builder.Services.AddScoped(typeof(IGenericsRepo<>), typeof(GenericsRepo<>));
+builder.Services.AddScoped<IDepartmentOperationsDL, DepartmentOperationsDL>();
 builder.Services.AddDbContext<MasterContext>(options => options.UseSqlServer("Data Source = TL545; Integrated Security = True"));
 builder.Services.AddAutoMapper(typeof(Program));
 

@@ -20,7 +20,7 @@ namespace EFCoreApp.Controllers
         {
             this.employeeDL = employeeDL;
         }
-        
+
         // GET: api/<EmployeesController>
         [HttpGet]
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
@@ -30,16 +30,16 @@ namespace EFCoreApp.Controllers
 
         // GET api/<EmployeesController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
             try
             {
                 var employee = await employeeDL.Get(id);
                 return Ok(employee);
             }
-            catch(DbUpdateException)
+            catch (DbUpdateException)
             {
-                return Problem(statusCode: 404, title:"ID not found", detail:"ID entered does not exist in the Database") ;
+                return Problem(statusCode: 404, title: "ID not found", detail: "ID entered does not exist in the Database");
             }
             catch (Exception ex)
             {
@@ -58,15 +58,15 @@ namespace EFCoreApp.Controllers
                 await employeeDL.Add(viewEmployee);
                 var employeeId = viewEmployee.Id;
                 //return the employee Id
-                return CreatedAtAction(nameof(Get), new {Id = employeeId}, viewEmployee);
+                return CreatedAtAction(nameof(Get), new { Id = employeeId }, viewEmployee);
             }
-            catch(DbUpdateException)
+            catch (DbUpdateException)
             {
                 return Problem(statusCode: 400, title: "Employee not added", detail: "The employee's details were not added in the Database");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return Problem(statusCode:400, title:ex.Message, detail: ex.StackTrace);
+                return Problem(statusCode: 400, title: ex.Message, detail: ex.StackTrace);
             }
         }
 

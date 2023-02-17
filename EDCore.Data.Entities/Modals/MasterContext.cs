@@ -20,18 +20,17 @@ public partial class MasterContext : DbContext
     public virtual DbSet<Employee> Employees { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=TL545;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Department>(entity =>
         {
-            entity.HasKey(e => e.DeptId).HasName("deptid");
+            entity.HasKey(e => e.Id).HasName("deptid");
 
             entity.ToTable("Department");
 
-            entity.Property(e => e.DeptId).ValueGeneratedNever();
+            entity.Property(e => e.Id).ValueGeneratedNever().HasColumnName("deptid");
             entity.Property(e => e.Hod)
                 .HasMaxLength(20)
                 .IsUnicode(false)

@@ -44,9 +44,9 @@ public class EmployeeOperationsRepo : IEmployeeOperationsRepo
             }
             context.SaveChanges();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            throw;
         }
     }
     /// <summary>
@@ -55,23 +55,24 @@ public class EmployeeOperationsRepo : IEmployeeOperationsRepo
     /// <param name="id"></param>
     public async Task Delete(int id)
     {
-        try { 
-        //var employeeInfo = context.Employees.Find(id);
-        var p0 = new SqlParameter("@p0", id);
-        int a = 0;
-        a = await context.Database.ExecuteSqlRawAsync("exec DeleteEmployee @p0", p0);
-        if (a == 0)
+        try
         {
-            throw new DbUpdateException();
+            //var employeeInfo = context.Employees.Find(id);
+            var p0 = new SqlParameter("@p0", id);
+            int a = 0;
+            a = await context.Database.ExecuteSqlRawAsync("exec DeleteEmployee @p0", p0);
+            if (a == 0)
+            {
+                throw new DbUpdateException();
+            }
+            //context.Entry(employee).State = EntityState.Modified;
+            context.SaveChanges();
         }
-        //context.Entry(employee).State = EntityState.Modified;
-        context.SaveChanges();
-    }
         catch (Exception ex)
         {
             throw ex;
         }
-context.SaveChanges();
+        context.SaveChanges();
     }
     /// <summary>
     /// this fetches employeees details using his ID to access the employee from the db
@@ -81,14 +82,14 @@ context.SaveChanges();
     /// <exception cref="NullReferenceException"></exception>
     public async Task<Employee> Get(int id)
     {
-            var employee = await context.Employees.FromSql($"exec GetEmployee {id}").ToListAsync();
-            if (employee.Count == 0)
-            {
-                throw new DbUpdateException();
-            }
-            return employee[0];
-        
-        
+        var employee = await context.Employees.FromSql($"exec GetEmployee {id}").ToListAsync();
+        if (employee.Count == 0)
+        {
+            throw new DbUpdateException();
+        }
+        return employee[0];
+
+
         //return employee.FirstOrDefault();
         //return context.Employees.Find(id);
     }

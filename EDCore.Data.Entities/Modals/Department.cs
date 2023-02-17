@@ -1,9 +1,7 @@
 ﻿namespace EDCore.Data.Entities.Modals;
 
-public partial class Department
+public partial class Department : BaseClass
 {
-    public int DeptId { get; set; }
-
     public string? Name { get; set; }
 
     public string? Hod { get; set; }

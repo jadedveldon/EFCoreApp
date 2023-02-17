@@ -13,10 +13,10 @@ namespace EFCoreApp.DataLayer.Implementations
     /// </summary>
     public class EmployeeOperationsDL : IEmployeeOperationsDL
     {
-        private readonly IEmployeeOperationsRepo repo;
+        private readonly IGenericsRepo<Employee> repo;
         private readonly IMapper mapper;
 
-        public EmployeeOperationsDL(IEmployeeOperationsRepo repo, IMapper mapper)
+        public EmployeeOperationsDL(IGenericsRepo<Employee> repo, IMapper mapper)
         {
             this.repo = repo;
             this.mapper = mapper;
